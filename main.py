@@ -16,12 +16,18 @@ def main():
 @app.route("/v1/pronouncationaccuracy",methods=["POST"])
 @cross_origin()
 def pronouncation():
-    return pronouncation_accuracy.get_pronouncation_accuracy(audio_file=request.json['audio'] , pronounce_word=request.json['element'])
+    uploaded_file = request.files['audio']
+    if uploaded_file:
+        uploaded_file.save('uploaded.wav')
+    return pronouncation_accuracy.get_pronouncation_accuracy(audio_file='uploaded.wav' , pronounce_word=request.json['element'])
 
 @app.route("/v1/sounddetect",methods=["POST"])
 @cross_origin()
 def soundclasification():
-    return classify_class(filename=request.json['audio'])
+    uploaded_file = request.files['audio']
+    if uploaded_file:
+        uploaded_file.save('uploaded.wav')
+    return classify_class(filename='uploaded.wav')
 
 @app.route("/form_data", methods=["POST"])
 @cross_origin()
