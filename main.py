@@ -19,7 +19,7 @@ def pronouncation():
     uploaded_file = request.files['audio']
     if uploaded_file:
         uploaded_file.save('uploaded.wav')
-    return pronouncation_accuracy.get_pronouncation_accuracy(audio_file='uploaded.wav' , pronounce_word=request.json['element'])
+    return pronouncation_accuracy.get_pronouncation_accuracy(audio_file='uploaded.wav' , pronounce_word=request.form['element'])
 
 @app.route("/v1/sounddetect",methods=["POST"])
 @cross_origin()

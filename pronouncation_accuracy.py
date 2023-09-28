@@ -66,6 +66,8 @@ def get_tokenize_similarity(words1 , words2):
 
 def get_pronouncation_accuracy(audio_file , pronounce_word):
   state , word1 = get_pronouncation_text(audio_file)
+  similarity = 0
+  hit = ""
   if not state:
     print(word1)
     return
@@ -77,22 +79,29 @@ def get_pronouncation_accuracy(audio_file , pronounce_word):
   if tokenize_similarity>= 0.45:
     print('Hit Token Similarity')
     print('Pronouncation Accuracy = ',tokenize_similarity)
-    return tokenize_similarity
+    similarity =  tokenize_similarity
+    hit = "Hit Token Similarity"
   else:
     try:
       print('Hit Wordnet Similarity')
       wordnet_similarity = get_wordnet_similarity(word1 , word2)
       if wordnet_similarity>=0.45:
        print('Pronouncation Accuracy = ',wordnet_similarity)
-       return wordnet_similarity
+       similarity = wordnet_similarity
+       hit = "Hit Wordnet Similarity"
       else:
         print('Pronouncation Accuracy = ',0)
-        return 0
+        similarity =  0
     except:
       print('Hit jaccard Similarity')
       jaccard_similarity = get_jaccard_similarity(word1 , word2)
       print('Pronouncation Accuracy = ',jaccard_similarity)
-      return jaccard_similarity
+      similarity = jaccard_similarity
+      hit = "Hit jaccard Similarity"
+  return {
+    "similarity":similarity*100,
+    "hit":hit
+  }
 
 # audio_file = 'teacher2.wav'
 # similarity = get_pronouncation_accuracy(audio_file , 'teachers')
