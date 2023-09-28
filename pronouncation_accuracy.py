@@ -1,5 +1,6 @@
 import speech_recognition as sr
 import nltk
+nltk.download('wordnet')
 from nltk.corpus import wordnet
 from nltk.stem import WordNetLemmatizer
 from nltk.metrics import jaccard_distance
