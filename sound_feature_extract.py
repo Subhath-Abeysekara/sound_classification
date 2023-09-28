@@ -1,6 +1,5 @@
 import tensorflow as tf
 import tensorflow_hub as hub
-import tensorflow_io as tfio
 import pandas as pd
 
 yamnet_model_handle = 'https://tfhub.dev/google/yamnet/1'
