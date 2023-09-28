@@ -13,15 +13,18 @@ CORS(app, resources={r"/": {"origins": "*"}})
 def main():
     return "home"
 
-@app.route("/v1/pronouncationaccuracy/<audio>/<element>")
-def pronouncation(audio , element):
-    return pronouncation_accuracy.get_pronouncation_accuracy(audio_file=audio , pronounce_word=element)
+@app.route("/v1/pronouncationaccuracy",methods=["POST"])
+@cross_origin()
+def pronouncation():
+    return pronouncation_accuracy.get_pronouncation_accuracy(audio_file=request.json['audio'] , pronounce_word=request.json['element'])
 
-@app.route("/v1/sounddetect/<audio>")
-def soundclasification(audio):
-    return classify_class(filename=audio)
+@app.route("/v1/sounddetect",methods=["POST"])
+@cross_origin()
+def soundclasification():
+    return classify_class(filename=request.json['audio'])
 
 @app.route("/form_data", methods=["POST"])
+@cross_origin()
 def formdata():
     uploaded_file = request.files['image']
     body = request.form['name']
