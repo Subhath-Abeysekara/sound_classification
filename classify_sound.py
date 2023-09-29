@@ -853,6 +853,7 @@ def classify_class(filename):
     res = statistics.mode(predicted_class)
     class_obj = model_classes[model_id]
     print(class_obj)
-    return list(class_obj.keys())[list(class_obj.values()).index(res)]
+    class_ = list(class_obj.keys())[list(class_obj.values()).index(res)]
+    return inferred_class
 
 # print(classify_class('1-115920-B-22.wav'))
