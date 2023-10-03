@@ -1,6 +1,7 @@
 import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize, sent_tokenize
+import spacy
 nltk.download('stopwords')
 nltk.download('punkt')
 from nltk import pos_tag
@@ -30,6 +31,25 @@ def generate_words_in_sequence(letters):
         words_in_sequence.append(word)
 
     return words_in_sequence
+
+nlp = spacy.load("en_core_web_sm")
+plural_word = "umbrella"
+
+def check_plural_word(word):
+  doc = nlp(word)
+  for token in doc:
+    if "Number=Plur" in token.morph:
+        singular_form = token.lemma_
+        return {
+            "state":True,
+            "word":singular_form
+        }
+        break
+  else:
+    return {
+        "state":False,
+        "word":word
+    }
 
 def get_pos_tags(sentence_):
   tokens = word_tokenize(sentence_)
@@ -68,27 +88,31 @@ def check_word_noun(word):
   return False
 
 def check_grammer(sentence):
-  pos_tags = get_pos_tags(sentence)
-  print(pos_tags)
-  matching = False
-  matching_sentence = ""
-  i=0
-  j=0
-  for tags in all_patterns:
-    word_token = all_words_tokens[i]
-    j=0
-    for pattern in tags:
-      if all(element1 == element2 for element1, element2 in zip(pattern, pos_tags)) and len(pattern)==len(pos_tags):
-        matching = True
-        print(word_token)
-        print(j)
-        matching_sentence = word_token[j]
-        break
-      j+=1
-    if matching:
-      break
-    i+=1
-  return matching , matching_sentence
+    pos_tags = get_pos_tags(sentence)
+    print(pos_tags)
+    matching = False
+    matching_sentence = ""
+    i = 0
+    j = 0
+    for tags in all_patterns:
+        if i >= 100:
+            matching_sentence = sentence
+            break
+        word_token = all_words_tokens[i]
+        j = 0
+        for pattern in tags:
+            if all(element1 == element2 for element1, element2 in zip(pattern, pos_tags)) and len(pattern) == len(
+                    pos_tags):
+                matching = True
+                print(word_token)
+                print(j)
+                matching_sentence = word_token[j]
+                break
+            j += 1
+        if matching:
+            break
+        i += 1
+    return matching, matching_sentence
 
 import re
 from nltk.corpus import words
@@ -105,35 +129,37 @@ def has_number(word):
         return False
 
 def get_sentence(sentence):
-  english_words = set(words.words())
-  words_ = word_tokenize(sentence)
-  meaning_full_words = []
-  print(words)
-  for word in words_:
-    number = has_number(word)
-    if word.lower() in english_words or number or check_word_noun(word):
-      meaning_full_words.append(word)
-  possible_sentences = []
-  if len(words_)==len(meaning_full_words):
-    print('perfect')
-    return sentence
-  matching , matching_sentence = check_grammer(sentence)
-  if matching:
-    return ' '.join(matching_sentence)
-  permutations = list(itertools.permutations(meaning_full_words))
+    english_words = set(words.words())
+    words_ = word_tokenize(sentence)
+    meaning_full_words = []
+    print(words)
+    for word in words_:
+        number = has_number(word)
+        word_singular = check_plural_word(word)['word'].lower()
+        print(word_singular)
+        if word.lower() in english_words or number or check_word_noun(word_singular):
+            meaning_full_words.append(word)
+    possible_sentences = []
+    print(meaning_full_words)
+    if len(words_) == len(meaning_full_words):
+        print('perfect')
+        return sentence
+    matching, matching_sentence = check_grammer(sentence)
+    if matching:
+        return ' '.join(matching_sentence)
+    permutations = list(itertools.islice(itertools.permutations(meaning_full_words),100))
 
-# Print the generated permutations
-  i = 0
-  for perm in permutations:
-    sentence_ = ' '.join(perm)
-    i+=1
-    print(i)
-    if i>= 10000:
-      return sentence
-    if check_grammer(sentence_):
-      print(sentence_)
-      return sentence_
-  return sentence
+    # Print the generated permutations
+    i = 0
+    for perm in permutations:
+        sentence_ = ' '.join(perm)
+        i += 1
+        if i >= 100:
+            return sentence
+        if check_grammer(sentence_):
+            print(sentence_)
+            return sentence_
+    return sentence
 
 def get_grammatical_sentence(sentences,sentence):
   for sentence in sentences:
