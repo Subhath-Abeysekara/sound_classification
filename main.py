@@ -31,26 +31,26 @@ def soundclasification():
         uploaded_file.save('uploaded.wav')
     return classify_class(filename='uploaded.wav')
 
-# @app.route('/v1/sign', methods=['POST'])
-# def sign():
-#     image_obj = request.files['image_path']
-#     sign_obj = request.form['sign']
-#     filename = image_obj.filename
-#
-#     image_path = f'uploads/{filename}'
-#     image_obj.save(image_path)
-#
-#     prediction, proba = inference(image_path)
-#     if prediction == sign_obj:
-#         matched = True
-#     else:
-#         matched = False
-#     return jsonify({
-#                     "PredSignType": f"{prediction}",
-#                     "TrueSignType": f"{sign_obj}",
-#                     "probability" : f"{proba}",
-#                     "matched": f"{matched}"
-#                     })
+@app.route('/v1/sign', methods=['POST'])
+def sign():
+    image_obj = request.files['image_path']
+    sign_obj = request.form['sign']
+    filename = image_obj.filename
+
+    image_path = f'uploads/{filename}'
+    image_obj.save(image_path)
+
+    prediction, proba = inference(image_path)
+    if prediction == sign_obj:
+        matched = True
+    else:
+        matched = False
+    return jsonify({
+                    "PredSignType": f"{prediction}",
+                    "TrueSignType": f"{sign_obj}",
+                    "probability" : f"{proba}",
+                    "matched": f"{matched}"
+                    })
 
 @app.route('/v1/summerize', methods=['POST'])
 def summerize():
