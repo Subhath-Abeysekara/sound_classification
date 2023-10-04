@@ -6,6 +6,7 @@ from flask_cors import CORS, cross_origin
 import pronouncation_accuracy
 from classify_sound import classify_class
 # from sign_detect import inference
+from sign_detect import inference
 from summerization import get_summerized_paragraph
 
 app = Flask(__name__)
