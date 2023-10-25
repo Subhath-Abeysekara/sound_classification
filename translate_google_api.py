@@ -1,8 +1,7 @@
 import os
 from google.cloud import speech_v1p1beta1 as speech
 from pydub import AudioSegment
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = '/content/drive/MyDrive/my_credentials/soundclassification-403103-e747d85c7c85.json'
-
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'soundclassification-403103-e747d85c7c85.json'
 
 def transcribe_audio(audio_file , sample_rate):
     client = speech.SpeechClient()
