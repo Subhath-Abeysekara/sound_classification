@@ -1,5 +1,8 @@
 import speech_recognition as sr
 import nltk
+
+from translate_google_api import get_text_google_api
+
 nltk.download('wordnet')
 from nltk.corpus import wordnet
 from nltk.stem import WordNetLemmatizer
@@ -70,8 +73,7 @@ def get_pronouncation_accuracy(audio_file , pronounce_word):
   similarity = 0
   hit = ""
   if not state:
-    print(word1)
-    return
+    word1 = get_text_google_api(audio_file)
   word2 = pronounce_word
   print(word1 , word2)
   words1 , words2 = get_tokenize_word(word1 , word2)
