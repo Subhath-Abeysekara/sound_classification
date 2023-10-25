@@ -2,7 +2,7 @@ import json
 
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
-
+from sound_convert_wav import convert_audio_type , convert_wav_bit_type
 import pronouncation_accuracy
 from classify_sound import classify_class
 # from sign_detect import inference
@@ -30,6 +30,8 @@ def soundclasification():
     uploaded_file = request.files['audio']
     if uploaded_file:
         uploaded_file.save('uploaded.wav')
+        convert_audio_type()
+        convert_wav_bit_type()
     return classify_class(filename='uploaded.wav')
 
 @app.route('/v1/sign', methods=['POST'])
