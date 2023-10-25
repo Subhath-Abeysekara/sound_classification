@@ -16,7 +16,7 @@ def is_wav_file(file_path):
 #         amr_audio.export('uploaded.wav', format='wav')
 
 def convert_audio_type():
-    amr_audio = AudioSegment.from_file('C:/Users/DFT/Downloads/20231010_011200.amr', format='amr')
+    amr_audio = AudioSegment.from_file('uploaded.amr', format='amr')
     amr_audio.export('uploaded2.wav', format='wav')
 # Specify the input 32-bit WAV file paths
 def convert_wav_bit_type():
