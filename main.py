@@ -31,7 +31,7 @@ def pronouncation():
 def soundclasification():
     uploaded_file = request.files['audio']
     if uploaded_file:
-        uploaded_file.save('uploaded.wav')
+        uploaded_file.save('uploaded.amr')
         convert_aud_ffmpeg()
         # convert_audio_type()
         convert_wav_bit_type()
