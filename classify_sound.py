@@ -12,9 +12,17 @@ def classify_class(filename):
     predicted_class = np.argmax(predictions, axis=-1)
     print(predicted_class)
     res = statistics.mode(predicted_class)
+    count= 0
+    for cls in predicted_class:
+        if res == cls:
+            count+=1
+    print(count)
     class_obj = my_classes[type_list.index(inferred_class)]
     print(class_obj)
-    class_ = list(class_obj.keys())[list(class_obj.values()).index(res)]
+    if count>5:
+        class_ = list(class_obj.keys())[list(class_obj.values()).index(res)]
+    else:
+        class_ = "Can not predict this sound"
     print(class_)
     print(type_list.index(inferred_class))
     print(my_classes[type_list.index(inferred_class)])

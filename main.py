@@ -33,7 +33,6 @@ def soundclasification():
     if uploaded_file:
         uploaded_file.save('uploaded.amr')
         convert_aud_ffmpeg()
-        # convert_audio_type()
         convert_wav_bit_type()
     return classify_class(filename='uploaded.wav')
 
