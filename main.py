@@ -39,10 +39,8 @@ def sign():
     image_obj = request.files['image_path']
     sign_obj = request.form['sign']
     filename = image_obj.filename
-
     image_path = f'uploads/{filename}'
     image_obj.save(image_path)
-
     prediction, proba = inference(image_path)
     if prediction == sign_obj:
         matched = True
@@ -67,10 +65,7 @@ def formdata():
     print(body)
     print(json.loads(body))
     if uploaded_file:
-        # Save the uploaded file to a directory or process it as needed
-        # For example, to save it to a directory:
         uploaded_file.save('uploaded.png')
-
         return 'File uploaded successfully!', 200
 
 if __name__ == '__main__':
