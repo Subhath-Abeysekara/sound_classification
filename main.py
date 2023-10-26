@@ -30,7 +30,7 @@ def soundclasification():
     uploaded_file = request.files['audio']
     if uploaded_file:
         uploaded_file.save('uploaded.wav')
-        convert_audio_type()
+        # convert_audio_type()
         convert_wav_bit_type()
     return classify_class(filename='uploaded.wav')
 
