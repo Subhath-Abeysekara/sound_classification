@@ -29,6 +29,7 @@ def pronouncation():
 @app.route("/v1/sounddetect",methods=["POST"])
 @cross_origin()
 def soundclasification():
+    print(request)
     uploaded_file = request.files['audio']
     if uploaded_file:
         uploaded_file.save('uploaded.amr')
