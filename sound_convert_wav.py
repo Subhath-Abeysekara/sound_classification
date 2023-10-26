@@ -28,7 +28,7 @@ def convert_wav_bit_type():
 
         # Read the 32-bit WAV file
         audio_data, sample_rate = sf.read(input_file_path)
-
+        print(sample_rate)
         # Convert the audio data to 16-bit
         audio_data_16bit = (audio_data * 32767).astype('int16')
 
