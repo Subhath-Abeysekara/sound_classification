@@ -19,7 +19,7 @@ def classify_class(filename):
     print(count)
     class_obj = my_classes[type_list.index(inferred_class)]
     print(class_obj)
-    if count>4:
+    if count>3:
         class_ = list(class_obj.keys())[list(class_obj.values()).index(res)]
     else:
         class_ = "Can not predict this sound"
